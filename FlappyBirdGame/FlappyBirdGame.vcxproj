@@ -132,10 +132,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\bird_player.cpp" />
     <ClCompile Include="src\flappy_bird_game.cpp" />
+    <ClCompile Include="src\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\bird_player.h" />
     <ClInclude Include="src\global_funcs.h" />
+    <ClInclude Include="src\structs.h" />
+    <ClInclude Include="src\texture_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,6 +2,11 @@
 //
 
 #include <iostream>
+#include <map>
+#include <array>
+#include <vector>
+#include "texture_manager.h"
+#include "bird_player.h"
 #include "global_funcs.h"
 #include <SDL.h>
 
@@ -12,27 +17,73 @@ int main(int argc, char* args[])
     return 0;
 }
 
-static SDL_Window* window;
-static SDL_Renderer* renderer;
-static SDL_Texture* texture;
+SDL_Window* window;
+SDL_Renderer* renderer;
+TextureManager* texture_manager;
+BirdPlayer* bird_player;
+
+
+// config
+std::vector<Sprite*> current_sprites;
+bool is_running = false;
+
 
 void game()
 {
-	init();
+	// TODO: Expose config using lua
+	// TODO: engine module/project ("monobehaviour", update, render, input, events)
 
-	// Clear the window to white
-	SDL_SetRenderDrawColor(renderer, 155, 55, 255, 255);
-	int w;
-	int h;
-	SDL_GetWindowSize(window, &w, &h);
-	SDL_Rect winder_rect{ 0, 0, w, h};
-	SDL_RenderFillRect(renderer, &winder_rect);
-	SDL_RenderPresent(renderer);
+	is_running = init();
 
-	system("pause");
+	while (is_running) {
+		input();
+		update();
+		render();
+	}
 
 	kill();
+
+	system("pause");
 }
+
+void input()
+{
+
+}
+
+void update()
+{
+	bird_player->Update();
+}
+
+void render()
+{
+	draw_backgroung();
+	draw_sprites();
+	SDL_RenderPresent(renderer);
+}
+
+void draw_backgroung()
+{
+	// Clear the window to white
+	SDL_SetRenderDrawColor(renderer, 155, 55, 255, 255);
+	int w, h;
+	SDL_GetWindowSize(window, &w, &h);
+	SDL_Rect r{ 0, 0, w, h };
+	SDL_RenderFillRect(renderer, &r);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+}
+
+void draw_sprites()
+{
+	// TODO: sort by z index
+	//
+	for (auto s : current_sprites) {
+		SDL_RenderCopyEx(renderer, s->texture, NULL, &s->rect, s->rotation, NULL, s->flip);
+	}
+}
+
+
 
 bool init()
 {
@@ -55,38 +106,37 @@ bool init()
 		return false;
 	}
 
-	load_resources();
+	texture_manager = new TextureManager(renderer);
+
+	if (load_init_resources() == false) {
+		return false;
+	}
+
+	// create bird_player
+	bird_player = new BirdPlayer(texture_manager, Vector2{ 0, 0 });
+
+	// TODO: create sprite factory (to centralize "push_back")
+	current_sprites.push_back(bird_player->sprite);
 
 	return true;
 }
 
-bool load_resources()
+bool load_init_resources()
 {
-	// Load bitmap into surface
-	SDL_Surface* buffer = SDL_LoadBMP("../res/imgs/yellowbird-upflap.bmp");
-	if (!buffer) {
-		std::cout << "Error loading image: " << SDL_GetError() << std::endl;
-		return false;
-	}
-
-	// Create texture
-	texture = SDL_CreateTextureFromSurface(renderer, buffer);
-	// Free surface as it's no longer needed
-	SDL_FreeSurface(buffer);
-	buffer = NULL;
-	if (!texture) {
-		std::cout << "Error creating texture: " << SDL_GetError() << std::endl;
-		return false;
-	}
+	return texture_manager->load_init_textures();
 }
+
 
 void kill()
 {
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	texture = NULL;
-	window = NULL;
-	renderer = NULL;
+	window = nullptr;
+
+	SDL_DestroyRenderer(renderer);
+	renderer = nullptr;
+
+	texture_manager->kill();
+	texture_manager = nullptr;
+
 	SDL_Quit();
 }
