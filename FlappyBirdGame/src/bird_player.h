@@ -1,8 +1,9 @@
 #pragma once
 #include "structs.h"
 #include "texture_manager.h"
+#include "IUpdate.h"
 
-class BirdPlayer 
+class BirdPlayer : public IUpdate
 {
 	// ref
 	TextureManager* texture_manager;
@@ -10,6 +11,6 @@ class BirdPlayer
 public:
 	Sprite* sprite;
 	BirdPlayer(TextureManager* texture_manager, Vector2 initialPos);
-	void Update();
+	void update(float deltatime);
 };
 

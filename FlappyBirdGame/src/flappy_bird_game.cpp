@@ -7,8 +7,10 @@
 #include <vector>
 #include "texture_manager.h"
 #include "bird_player.h"
+#include "IUpdate.h"
 #include "global_funcs.h"
 #include <SDL.h>
+
 
 int main(int argc, char* args[])
 {
@@ -17,14 +19,17 @@ int main(int argc, char* args[])
     return 0;
 }
 
+// SDL
 SDL_Window* window;
 SDL_Renderer* renderer;
+
+// Objects
 TextureManager* texture_manager;
 BirdPlayer* bird_player;
+std::vector<Sprite*> sprite_list;
+std::vector<IUpdate*> IUpdates_list;
 
-
-// config
-std::vector<Sprite*> current_sprites;
+// State
 bool is_running = false;
 
 
@@ -35,10 +40,14 @@ void game()
 
 	is_running = init();
 
+	float deltatime = 0;
 	while (is_running) {
+		Uint64 start = SDL_GetPerformanceCounter();
 		input();
-		update();
+		update(deltatime);
 		render();
+		Uint64 end = SDL_GetPerformanceCounter();
+		float deltatime = (end - start) / (float)SDL_GetPerformanceFrequency();
 	}
 
 	kill();
@@ -51,9 +60,11 @@ void input()
 
 }
 
-void update()
+void update(float deltatime)
 {
-	bird_player->Update();
+	for (auto u : IUpdates_list) {
+		u->update(deltatime);
+	}
 }
 
 void render()
@@ -78,7 +89,7 @@ void draw_sprites()
 {
 	// TODO: sort by z index
 	//
-	for (auto s : current_sprites) {
+	for (auto s : sprite_list) {
 		SDL_RenderCopyEx(renderer, s->texture, NULL, &s->rect, s->rotation, NULL, s->flip);
 	}
 }
@@ -105,7 +116,7 @@ bool init()
 		std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
 		return false;
 	}
-
+	
 	texture_manager = new TextureManager(renderer);
 
 	if (load_init_resources() == false) {
@@ -114,9 +125,10 @@ bool init()
 
 	// create bird_player
 	bird_player = new BirdPlayer(texture_manager, Vector2{ 0, 0 });
+	IUpdates_list.push_back(bird_player);
 
 	// TODO: create sprite factory (to centralize "push_back")
-	current_sprites.push_back(bird_player->sprite);
+	sprite_list.push_back(bird_player->sprite);
 
 	return true;
 }
