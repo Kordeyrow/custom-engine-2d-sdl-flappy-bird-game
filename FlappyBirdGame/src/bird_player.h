@@ -9,6 +9,7 @@ class BirdPlayer : public IUpdate
 	TextureManager* texture_manager;
 
 public:
+	Vector2 position;
 	Sprite* sprite;
 	BirdPlayer(TextureManager* texture_manager, Vector2 initialPos);
 	void update(float deltatime);

@@ -17,5 +17,6 @@ BirdPlayer::BirdPlayer(TextureManager* _texture_manager, Vector2 initialPos)
 
 void BirdPlayer::update(float deltatime)
 {
-	sprite->rect.x += 1;
+	position.x += 1 * deltatime;
+	sprite->rect.x = position.x;
 }

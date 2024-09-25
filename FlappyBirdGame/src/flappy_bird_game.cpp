@@ -47,7 +47,7 @@ void game()
 		update(deltatime);
 		render();
 		Uint64 end = SDL_GetPerformanceCounter();
-		float deltatime = (end - start) / (float)SDL_GetPerformanceFrequency();
+		deltatime = (end - start) / (float)SDL_GetPerformanceFrequency();
 	}
 
 	kill();
