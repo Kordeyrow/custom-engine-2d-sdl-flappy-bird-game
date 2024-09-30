@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\BaseEvent.cpp" />
     <ClCompile Include="src\backup.cpp" />
     <ClCompile Include="src\IListener.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="src\texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\BaseEvent.h" />
     <ClInclude Include="src\IListener.h" />
     <ClInclude Include="src\EventManager.h" />

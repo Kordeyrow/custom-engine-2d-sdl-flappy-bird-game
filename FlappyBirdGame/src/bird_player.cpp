@@ -17,6 +17,15 @@ BirdPlayer::BirdPlayer(TextureManager* _texture_manager, Vector2 initialPos)
 
 void BirdPlayer::update(float deltatime)
 {
-	position.x += 1 * deltatime;
-	sprite->rect.x = position.x;
+	movement_update(deltatime);
+}
+
+void BirdPlayer::movement_update(float deltatime) {
+
+	auto& inputManager = InputManager::GetInstance();  // Get singleton instance
+
+	if (inputManager.is_key_pressed(InputManager::InputKey::RIGHT_ARROW)) {
+		position.x += 100 * deltatime;
+		sprite->rect.x = position.x;
+	}
 }
