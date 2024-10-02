@@ -25,7 +25,7 @@ SDL_Window* window;
 SDL_Renderer* renderer;
 
 // Systems
-PhysicsSystem physics;
+PhysicsSystem& physics = PhysicsSystem::GetInstance();
 
 // Managers
 TextureManager* texture_manager;

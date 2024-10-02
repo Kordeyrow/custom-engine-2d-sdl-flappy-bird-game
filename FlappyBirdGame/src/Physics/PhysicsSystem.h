@@ -9,11 +9,25 @@ private:
 	const float world_space_proportion = 7;
 	const float max_chained_simulation_count = 3;
 	const float simulation_delay_seconds = 0.02;
-	const float air_resistance = 2;
+	const float air_resistance = 1.05;
 
 	std::set<Rigidbody*> rigidbody_list;
 
+	// Singleton
+	PhysicsSystem() {
+	}
+
 public:
+
+	// Static method to access the singleton instance
+	static PhysicsSystem& GetInstance() {
+		static PhysicsSystem instance;
+		return instance;
+	}
+
+	// Prevent copying and assignment
+	PhysicsSystem(const PhysicsSystem&) = delete;
+	PhysicsSystem& operator=(const PhysicsSystem&) = delete;
 
 	void init() {
 		//Rigidbody_list.reserve(10);

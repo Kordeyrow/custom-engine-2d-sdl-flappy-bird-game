@@ -26,15 +26,20 @@ void BirdPlayer::update(double elapsedTime)
 
 void BirdPlayer::movement_update(double elapsedTime) {
 
+	// move
+	//
 	auto& inputManager = InputContainer::GetInstance();  // Get singleton instance
 	if (inputManager.is_key_pressed(InputContainer::InputKey::RIGHT_ARROW)) {
-		sprite->transform.position += Vector2{1, 0} * 1000000 * elapsedTime;
+		sprite->transform.position += Vector2{1, 0} * 100 * elapsedTime;
 	}
 
-	/*if (inputManager.is_key_pressed(InputContainer::InputKey::SPACE)) {
-		PhysicsSystem.instance.reset_forces();
-		sprite->transform.position += Vector2{ 1, 0 } *1000000 * elapsedTime;
-	}*/
+	// Jump
+	//
+	if (inputManager.is_key_pressed(InputContainer::InputKey::SPACE)) {
+		PhysicsSystem::GetInstance().reset_forces(this);
+		PhysicsSystem::GetInstance().add_force(this, Vector2{ 20, -20 });
+		//sprite->transform.position += Vector2{ 1, 0 } *1000000 * elapsedTime;
+	}
 }
 
 Transform* BirdPlayer::get_transform()
