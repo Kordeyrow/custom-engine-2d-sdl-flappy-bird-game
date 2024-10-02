@@ -36,7 +36,7 @@ public:
     }
 
     bool Equals(const IListener* other) const override {
-        auto* otherListener = dynamic_cast<const FreeFunctionListener*>(other);
+        auto otherListener = dynamic_cast<const FreeFunctionListener*>(other);
         return otherListener && otherListener->func == this->func;
     }
 };

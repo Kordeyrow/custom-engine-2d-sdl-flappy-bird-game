@@ -1,7 +1,6 @@
 #pragma once
-#include <vector>
 #include <set>
-#include "IFixedUpdate.h"
+#include "Rigidbody.h"
 
 class PhysicsSystem {
 
@@ -10,13 +9,14 @@ private:
 	const float world_space_proportion = 7;
 	const float max_chained_simulation_count = 3;
 	const float simulation_delay_seconds = 0.02;
+	const float air_resistance = 2;
 
-	std::set<IFixedUpdate*> IFixedUpdate_list;
+	std::set<Rigidbody*> rigidbody_list;
 
 public:
 
 	void init() {
-		//IFixedUpdate_list.reserve(10);
+		//Rigidbody_list.reserve(10);
 	}
 
 	float elapsed_time_sum = 0;
@@ -53,22 +53,43 @@ public:
 
 	void run_simulation(int interpolate_count = 1) {
 		static float fixed_update_gravity = gravity * simulation_delay_seconds * world_space_proportion;
-		for (auto obj : IFixedUpdate_list) {
-			obj->currentForce.y += fixed_update_gravity;
-			obj->get_transform()->position += obj->currentForce * interpolate_count * simulation_delay_seconds * world_space_proportion;
+		for (auto& obj : rigidbody_list) {
+			obj->final_force.y += fixed_update_gravity;
+			auto fixed_update_final_force = obj->final_force * interpolate_count * simulation_delay_seconds * world_space_proportion;
+			obj->get_transform()->position += fixed_update_final_force;
+			obj->final_force.x /= air_resistance;
 		}
 	}
 
-	void add(IFixedUpdate* obj) {
-		//IFixedUpdate_list.push_back(obj);
-		IFixedUpdate_list.insert(obj);
+	void add_force(Rigidbody* obj, Vector2 dir) {
+		if (exists(obj)) {
+			obj->final_force += dir;
+		}
 	}
 
-	void remove(IFixedUpdate* obj) {
-		IFixedUpdate_list.erase(obj);
-		/*auto id = std::find(IFixedUpdate_list.begin(), IFixedUpdate_list.end(), obj);
-		if (id != IFixedUpdate_list.end()) {
-			IFixedUpdate_list.erase(id);
+	void reset_forces(Rigidbody* obj) {
+		if (exists(obj)) {
+			obj->final_force = Vector2::zero;
+		}
+	}
+
+	bool exists(Rigidbody* obj) {
+		return rigidbody_list.find(obj) != rigidbody_list.end();
+	}
+
+	void add(Rigidbody* obj) {
+		//Rigidbody_list.push_back(obj);
+		rigidbody_list.insert(obj);
+	}
+
+	void remove(Rigidbody* obj) {
+		rigidbody_list.erase(obj);
+
+		//Rigidbody_list.erase(obj);
+
+		/*auto id = std::find(Rigidbody_list.begin(), Rigidbody_list.end(), obj);
+		if (id != Rigidbody_list.end()) {
+			Rigidbody_list.erase(id);
 		}*/
 	}
 };

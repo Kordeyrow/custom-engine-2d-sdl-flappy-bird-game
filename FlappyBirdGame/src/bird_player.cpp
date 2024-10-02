@@ -30,6 +30,11 @@ void BirdPlayer::movement_update(double elapsedTime) {
 	if (inputManager.is_key_pressed(InputContainer::InputKey::RIGHT_ARROW)) {
 		sprite->transform.position += Vector2{1, 0} * 1000000 * elapsedTime;
 	}
+
+	/*if (inputManager.is_key_pressed(InputContainer::InputKey::SPACE)) {
+		PhysicsSystem.instance.reset_forces();
+		sprite->transform.position += Vector2{ 1, 0 } *1000000 * elapsedTime;
+	}*/
 }
 
 Transform* BirdPlayer::get_transform()

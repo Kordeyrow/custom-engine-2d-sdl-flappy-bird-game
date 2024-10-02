@@ -1,9 +1,10 @@
 #pragma once
 #include "Transform.h"
 
-class IFixedUpdate {
+class Rigidbody {
+	friend class PhysicsSystem;
+	Vector2 final_force;
 public:
 	virtual Transform* get_transform() = 0;
-	Vector2 currentForce;
 };
 

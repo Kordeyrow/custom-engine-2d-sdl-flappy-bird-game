@@ -9,7 +9,7 @@
 #include "IUpdate.h"
 #include "global_funcs.h"
 #include "Physics/PhysicsSystem.h"
-#include "Physics/IFixedUpdate.h"
+#include "Physics/Rigidbody.h"
 #include <SDL.h>
 
 
@@ -105,7 +105,7 @@ bool init()
 	// TODO: create sprite factory (to centralize "push_back")
 	sprite_list.push_back(bird_player->sprite);
 	// TODO: 
-	physics.add((IFixedUpdate*)bird_player);
+	physics.add((Rigidbody*)bird_player);
 
 	return true;
 }
@@ -125,7 +125,7 @@ void render()
 }
 
 void update_enabled_gameobjects(double elapsedTime) {
-	for (auto obj : enabled_gameobjects) {
+	for (auto& obj : enabled_gameobjects) {
 		obj->update(elapsedTime);
 	}
 }
@@ -154,7 +154,7 @@ void draw_sprites()
 {
 	// TODO: sort by z index
 	//
-	for (auto s : sprite_list) {
+	for (auto& s : sprite_list) {
 		auto& t = s->transform;
 		SDL_Rect r{ (int)t.position.x, (int)t.position.y, (int)t.size.x, (int)t.size.y };
 		SDL_RenderCopyEx(renderer, s->texture, NULL, &r, s->rotation, NULL, s->flip);

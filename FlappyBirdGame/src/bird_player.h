@@ -1,11 +1,12 @@
 #pragma once
 #include "structs.h"
-#include "Physics/IFixedUpdate.h"
+#include "Physics/Rigidbody.h"
 #include "texture_manager.h"
 #include "IUpdate.h"
 #include "InputContainer.h"
+#include "Physics/PhysicsSystem.h"
 
-class BirdPlayer : public IUpdate, IFixedUpdate
+class BirdPlayer : public IUpdate, Rigidbody
 {
 	// ref
 	TextureManager* texture_manager;
@@ -17,7 +18,7 @@ public:
 
 	Sprite* sprite;
 
-	// Inherited via IFixedUpdate
+	// Inherited via Rigidbody
 	Transform* get_transform() override;
 };
 

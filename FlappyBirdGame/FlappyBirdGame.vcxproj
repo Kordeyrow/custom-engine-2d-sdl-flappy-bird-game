@@ -132,9 +132,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\gameobject.cpp" />
+    <ClCompile Include="src\engine\engine.cpp" />
     <ClCompile Include="src\SDL_controller.cpp" />
     <ClCompile Include="src\Physics\Collider.cpp" />
-    <ClCompile Include="src\Physics\IFixedUpdate.cpp" />
+    <ClCompile Include="src\Physics\Rigidbody.cpp" />
     <ClCompile Include="src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\InputContainer.cpp" />
     <ClCompile Include="src\BaseEvent.cpp" />
@@ -150,9 +152,11 @@
     <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\gameobject.h" />
+    <ClInclude Include="src\engine\engine.h" />
     <ClInclude Include="src\SDL_controller.h" />
     <ClInclude Include="src\Physics\Collider.h" />
-    <ClInclude Include="src\Physics\IFixedUpdate.h" />
+    <ClInclude Include="src\Physics\Rigidbody.h" />
     <ClInclude Include="src\Physics\PhysicsSystem.h" />
     <ClInclude Include="src\InputContainer.h" />
     <ClInclude Include="src\BaseEvent.h" />
