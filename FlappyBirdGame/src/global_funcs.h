@@ -2,16 +2,15 @@
 #include "structs.h"
 #include <SDL.h>
 
-void game();
+void run();
+void close();
+
 bool init();
-	void init_vectors_reserve();
-	bool load_init_resources();
-bool input();
-float get_deltatime();
-	void read_key_down(SDL_Keycode key);
-	void read_key_up(SDL_Keycode key);
-void update(float deltatime);
+void update();
 void render();
-	void draw_backgroung();
-	void draw_sprites();
-void kill();
+
+double calculate_elapsed_time();
+void update_enabled_gameobjects(double elapsedTime);
+
+void draw_backgroung();
+void draw_sprites();
