@@ -53,4 +53,5 @@ void TextureManager::kill()
 	for (auto& t : loaded_textures) {
 		SDL_DestroyTexture(t.second);
 	}
+	loaded_textures.clear();
 }

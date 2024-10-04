@@ -2,12 +2,15 @@
 #include "structs.h"
 #include <SDL.h>
 
-void game();
+void run();
+void close();
+
 bool init();
-	bool load_init_resources();
-void input();
 void update();
 void render();
-	void draw_backgroung();
-	void draw_sprites();
-void kill();
+
+double calculate_elapsed_time();
+void update_enabled_gameobjects(double elapsedTime);
+
+void draw_backgroung();
+void draw_sprites();

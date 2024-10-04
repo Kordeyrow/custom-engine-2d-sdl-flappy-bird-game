@@ -132,15 +132,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\gameobject.cpp" />
+    <ClCompile Include="src\engine\engine.cpp" />
+    <ClCompile Include="src\SDL_controller.cpp" />
+    <ClCompile Include="src\Physics\Collider.cpp" />
+    <ClCompile Include="src\Physics\Rigidbody.cpp" />
+    <ClCompile Include="src\Physics\PhysicsSystem.cpp" />
+    <ClCompile Include="src\InputContainer.cpp" />
+    <ClCompile Include="src\BaseEvent.cpp" />
+    <ClCompile Include="src\backup.cpp" />
+    <ClCompile Include="src\IListener.cpp" />
+    <ClCompile Include="src\EventManager.cpp" />
+    <ClCompile Include="src\event.cpp" />
+    <ClCompile Include="src\IUpdate.cpp" />
     <ClCompile Include="src\bird_player.cpp" />
     <ClCompile Include="src\flappy_bird_game.cpp" />
     <ClCompile Include="src\texture_manager.cpp" />
+    <ClCompile Include="src\Physics\Transform.cpp" />
+    <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\gameobject.h" />
+    <ClInclude Include="src\engine\engine.h" />
+    <ClInclude Include="src\SDL_controller.h" />
+    <ClInclude Include="src\Physics\Collider.h" />
+    <ClInclude Include="src\Physics\Rigidbody.h" />
+    <ClInclude Include="src\Physics\PhysicsSystem.h" />
+    <ClInclude Include="src\InputContainer.h" />
+    <ClInclude Include="src\BaseEvent.h" />
+    <ClInclude Include="src\IListener.h" />
+    <ClInclude Include="src\EventManager.h" />
+    <ClInclude Include="src\event.h" />
+    <ClInclude Include="src\IUpdate.h" />
     <ClInclude Include="src\bird_player.h" />
     <ClInclude Include="src\global_funcs.h" />
     <ClInclude Include="src\structs.h" />
     <ClInclude Include="src\texture_manager.h" />
+    <ClInclude Include="src\Physics\Transform.h" />
+    <ClInclude Include="src\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
