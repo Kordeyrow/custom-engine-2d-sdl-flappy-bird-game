@@ -2,6 +2,7 @@
 
 BirdPlayer::BirdPlayer(TextureManager* _texture_manager, Vector2 initialPos)
 {
+	rigidbody = Rigidbody{};
 	texture_manager = _texture_manager;
 	sprite = new Sprite
 	{
@@ -28,21 +29,16 @@ void BirdPlayer::movement_update(double elapsedTime) {
 
 	// move
 	//
-	auto& inputManager = InputContainer::GetInstance();  // Get singleton instance
-	if (inputManager.is_key_pressed(InputContainer::InputKey::RIGHT_ARROW)) {
+	auto& input_manager = InputContainer::GetInstance();  // Get singleton instance
+	if (input_manager.is_key_pressed(InputContainer::InputKey::INPUTKEY_RIGHT_ARROW)) {
 		sprite->transform.position += Vector2{1, 0} * 100 * elapsedTime;
 	}
 
 	// Jump
 	//
-	if (inputManager.is_key_pressed(InputContainer::InputKey::SPACE)) {
-		PhysicsSystem::GetInstance().reset_forces(this);
-		PhysicsSystem::GetInstance().add_force(this, Vector2{ 20, -20 });
-		//sprite->transform.position += Vector2{ 1, 0 } *1000000 * elapsedTime;
+	if (input_manager.is_key_pressed(InputContainer::InputKey::INPUTKEY_SPACE)) {
+		// TODO: invert to "rigidbody.reset_forces"
+		PhysicsSystem::GetInstance().reset_forces(this->get_rigidbody());
+		PhysicsSystem::GetInstance().add_force(this->get_rigidbody(), Vector2{ 0, 30 });
 	}
-}
-
-Transform* BirdPlayer::get_transform()
-{
-	return &sprite->transform;
 }

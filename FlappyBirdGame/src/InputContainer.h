@@ -6,12 +6,13 @@ class InputContainer {
 public:
 
     enum InputKey {
-        RIGHT_ARROW,
-        LEFT_ARROW,
-        UP_ARROW,
-        DOWN_ARROW,
-        SPACE,
-        ESCAPE
+        INPUTKEY_RIGHT_ARROW,
+        INPUTKEY_LEFT_ARROW,
+        INPUTKEY_UP_ARROW,
+        INPUTKEY_DOWN_ARROW,
+        INPUTKEY_SPACE,
+        INPUTKEY_ESCAPE,
+        INPUTKEY_F1
     };
 
     // Static method to access the singleton instance
@@ -131,12 +132,13 @@ private:
 
     // Config
     std::map<InputKey, SDL_Scancode> keyMap = {
-        {RIGHT_ARROW, SDL_SCANCODE_RIGHT},
-        {LEFT_ARROW, SDL_SCANCODE_LEFT},
-        {UP_ARROW, SDL_SCANCODE_UP},
-        {DOWN_ARROW, SDL_SCANCODE_DOWN},
-        {SPACE, SDL_SCANCODE_SPACE},
-        {ESCAPE, SDL_SCANCODE_ESCAPE}
+        {INPUTKEY_RIGHT_ARROW, SDL_SCANCODE_RIGHT},
+        {INPUTKEY_LEFT_ARROW, SDL_SCANCODE_LEFT},
+        {INPUTKEY_UP_ARROW, SDL_SCANCODE_UP},
+        {INPUTKEY_DOWN_ARROW, SDL_SCANCODE_DOWN},
+        {INPUTKEY_SPACE, SDL_SCANCODE_SPACE},
+        {INPUTKEY_ESCAPE, SDL_SCANCODE_ESCAPE},
+        {INPUTKEY_F1, SDL_SCANCODE_F1}
     };
 };
 

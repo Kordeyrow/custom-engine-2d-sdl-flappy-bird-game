@@ -5,11 +5,11 @@
 class PhysicsSystem {
 
 private:
-	const float gravity = 9.8;
-	const float world_space_proportion = 7;
+	const float gravity = -9.8;
+	const float world_space_proportion = 9;
 	const float max_chained_simulation_count = 3;
 	const float simulation_delay_seconds = 0.02;
-	const float air_resistance = 1.05;
+	const float air_resistance = 1.04;
 
 	std::set<Rigidbody*> rigidbody_list;
 
@@ -70,9 +70,16 @@ public:
 		for (auto& obj : rigidbody_list) {
 			obj->final_force.y += fixed_update_gravity;
 			auto fixed_update_final_force = obj->final_force * interpolate_count * simulation_delay_seconds * world_space_proportion;
-			obj->get_transform()->position += fixed_update_final_force;
-			obj->final_force.x /= air_resistance;
+			apply_force_movement(obj, fixed_update_final_force);
 		}
+	}
+
+	void apply_force_movement(Rigidbody* obj, Vector2 finalForce) {
+		finalForce.y *= -1;
+		obj->gameobject->position += finalForce;
+
+		// air_resistance
+		obj->final_force.x /= air_resistance;
 	}
 
 	void add_force(Rigidbody* obj, Vector2 dir) {

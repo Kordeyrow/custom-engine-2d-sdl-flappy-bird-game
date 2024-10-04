@@ -6,19 +6,21 @@
 #include "InputContainer.h"
 #include "Physics/PhysicsSystem.h"
 
-class BirdPlayer : public IUpdate, Rigidbody
+class BirdPlayer : public IUpdate, Gameobject
 {
-	// ref
+	// Dependencies
 	TextureManager* texture_manager;
+
+	// Components
+	Rigidbody rigidbody;
 
 public:
 	BirdPlayer(TextureManager* texture_manager, Vector2 initialPos);
 	void update(double elapsedTime);
 	void movement_update(double elapsedTime);
 
-	Sprite* sprite;
+	Rigidbody* get_rigidbody() { return &rigidbody; }
 
-	// Inherited via Rigidbody
-	Transform* get_transform() override;
+	Sprite* sprite;
 };
 
